@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="liganame">
+        <item>English Premiere League</item>
+        <item>Serie A</item>
+        <item>La Liga</item>
+        <item>Bundesliga</item>
+        <item>Premiera Liga</item>
+
+        <item>Eredevisie</item>
+        <item>Jupiler Pro League</item>
+        <item>Ligue 1</item>
+        <item>Ekstraklasa</item>
+
+        <item>Mexican Primera</item>
+        <item>Brazillian Brasileire</item>
+
+    </string-array>
+
+
+    <integer-array name="logo_liga">
+        <item>@drawable/epl</item>
+        <item>@drawable/seriea</item>
+        <item>@drawable/laliga</item>
+        <item>@drawable/bundesliga</item>
+        <item>@drawable/premieraliga</item>
+
+        <item>@drawable/eredevisie</item>
+        <item>@drawable/jupiler</item>
+        <item>@drawable/ligue1</item>
+        <item>@drawable/ekstraklasa</item>
+
+        <item>@drawable/mexican</item>
+        <item>@drawable/brasileiro</item>
+
+
+    </integer-array>
+
+    <string-array name="idleague">
+        <item>4328</item>
+        <item>4332</item>
+        <item>4335</item>
+        <item>4331</item>
+        <item>4344</item>
+
+        <item>4337</item>
+        <item>4338</item>
+        <item>4334</item>
+        <item>4422</item>
+
+        <item>4350</item>
+        <item>4351</item>
+
+
+    </string-array>
+
+
+    <string-array name="negara">
+        <item>English</item>
+        <item>Italia</item>
+        <item>Sepanyol</item>
+        <item>Jerman</item>
+        <item>Portugal</item>
+
+        <item>Belanda</item>
+        <item>Belgia</item>
+        <item>Prancis</item>
+        <item>Polandia</item>
+
+        <item>Mexico</item>
+        <item>Brasileire</item>
+
+
+    </string-array>
+
+    <string-array name="firstleague">
+        <item>English</item>
+        <item>Italia</item>
+        <item>Sepanyol</item>
+        <item>Jerman</item>
+        <item>Portugal</item>
+
+        <item>Belanda</item>
+        <item>Belgia</item>
+        <item>Prancis</item>
+        <item>Polandia</item>
+
+        <item>Mexico</item>
+        <item>Brasileire</item>
+
+
+    </string-array>
+
+
+</resources>
