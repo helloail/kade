@@ -1,53 +1,64 @@
 package com.example.foryoudicodingkadesubtwo.Test
 
-import android.util.Log
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.example.foryoudicodingkadesubtwo.mock
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayPresenter
+import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayResponse
+import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayView
+import com.example.foryoudicodingkadesubtwo.TestContextProvider
 import com.example.foryoudicodingkadesubtwo.view.model.ImageAwayInit
-import com.example.foryoudicodingkadesubtwo.view.model.ImageHomeInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.ImageAwayViewModel
-import org.junit.Assert
+import com.google.gson.Gson
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
 class ImageAwayTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
+    @Mock
+    private lateinit var view: ImageAwayView
 
-    private lateinit var imageAwayViewModel: ImageAwayViewModel
+    @Mock
+    private lateinit var gson: Gson
 
-    private val observer: Observer<List<ImageAwayInit>> = mock()
+    @Mock
+    private lateinit var apiRepository: ApiRepository
 
-    val id = "134634"
+    @Mock
+    private lateinit var apiResponse: Deferred<String>
+
+    private lateinit var presenter: ImageAwayPresenter
 
     @Before
-    fun before() {
-        imageAwayViewModel = ImageAwayViewModel()
-
-
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        presenter = ImageAwayPresenter(view, apiRepository, gson, TestContextProvider())
     }
 
     @Test
-    fun getLeagueDetailSuccsess() {
+    fun testGetTeamList() {
+        val teams: MutableList<ImageAwayInit> = mutableListOf()
+        val response = ImageAwayResponse(teams)
+        val league = "134634"
 
-        val expectedUser = ImageHomeInit(
-            "Dutch Eredivisie"
-        )
+        runBlocking {
+            Mockito.`when`(apiRepository.doRequestAsync(ArgumentMatchers.anyString()))
+                .thenReturn(apiResponse)
+            Mockito.`when`(apiResponse.await()).thenReturn("")
+            Mockito.`when`(
+                gson.fromJson(
+                    "",
+                    ImageAwayResponse::class.java
+                )
+            ).thenReturn(response)
 
-        imageAwayViewModel.setListmovie(id)
-
-        imageAwayViewModel.getListMovie().observeForever(observer)
-
-        val captor = ArgumentCaptor.forClass(ImageAwayInit::class.java)
-
-        captor.run {
-            Mockito.verify(observer, Mockito.times(1)).onChanged(listOf(capture()))
-            Assert.assertEquals(expectedUser, value)
+            presenter.getAwayImage(league)
+            Mockito.verify(view).showLoading()
+            Mockito.verify(view).showImageAway(teams)
+            Mockito.verify(view).hideLoading()
         }
     }
 }

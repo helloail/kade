@@ -9,6 +9,7 @@ data class SearchActivityInit(
     val strAwayTeam: String?,
     val intRound: String?,
     val dateEvent: String?,
+    val strSport: String?,
     val strTimeLocal: String?,
     val idEvent: String,
     val idHomeTeam: String?,

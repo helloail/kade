@@ -9,27 +9,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.R.menu.menu_search
+import com.example.foryoudicodingkadesubtwo.Search.SearchMatchPresenter
+import com.example.foryoudicodingkadesubtwo.Search.SearchMatchVIew
 import com.example.foryoudicodingkadesubtwo.adapter.SearchActivityAdapter
 import com.example.foryoudicodingkadesubtwo.view.fragment.FavoritesFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.ListLeagueFragment
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.SearchViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
-class HomeActivity : AppCompatActivity() {
-    private lateinit var sViewModel: SearchViewModel
-
-    private lateinit var sdapter: SearchActivityAdapter
+class HomeActivity : AppCompatActivity(), SearchMatchVIew {
+    private lateinit var mAdapter: SearchActivityAdapter
+    private var teams: MutableList<SearchActivityInit> = mutableListOf()
+    private lateinit var presenter: SearchMatchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,45 +71,47 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initRecyclerview() {
 
-        sdapter = SearchActivityAdapter()
-        sdapter.notifyDataSetChanged()
-        search_recycler.setLayoutManager(LinearLayoutManager(this))
-        search_recycler.setHasFixedSize(true)
-        search_recycler.setItemAnimator(DefaultItemAnimator())
-        search_recycler.setAdapter(sdapter)
-        sdapter.setOnItemClickCallback(object : SearchActivityAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: SearchActivityInit) {
-                toast("Hello, ${data.idEvent}, Opened")
-                startActivity<DetailSearchActivity>(DetailSearchActivity.SET_PARCELABLE to data)
-            }
-        })
-        sViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            SearchViewModel::class.java
-        )
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = SearchMatchPresenter(this, request, gson)
+
+        mAdapter = SearchActivityAdapter(teams) {
+            startActivity<DetailSearchActivity>(
+                DetailSearchActivity.SET_PARCELABLE to it
+            )
+        }
 
 
-        sViewModel.getSearchMatch().observe(this, Observer {
-            it?.also {
-                if (it == null) {
-                    toast("Detail init null")
-                }
-
-                if (it.size <= 0) {
-
-                    toast("Detail tidak ditemukan")
-                }
-                if (it != null) {
-
-                    Log.d("jsonsearc", it.toString())
-
-                    sdapter.setData(it)
+        search_recycler.layoutManager = LinearLayoutManager(this)
+        search_recycler.adapter = mAdapter
 
 
-                }
-
-            }
-        })
     }
+
+    override fun showLoading() {
+//        progressBar.visible()
+    }
+
+    override fun hideLoading() {
+//        progressBar.invisible()
+    }
+
+    override fun showTeamList(data: List<SearchActivityInit>) {
+        if (data.size == 0) {
+            toast("data tidak ditemukan")
+        }
+
+
+
+        teams.clear()
+
+        Log.d("jsonres", data.toString())
+
+
+        teams.addAll(data)
+        mAdapter.notifyDataSetChanged()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -124,7 +126,9 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                sViewModel.setSearchaMatch(query)
+//                sViewModel.setSearchaMatch(query)
+                presenter.getSearchMatch(query)
+
                 return true
             }
         })
@@ -160,5 +164,4 @@ class HomeActivity : AppCompatActivity() {
         actionBar!!.title = " "
         //set back button
     }
-
 }

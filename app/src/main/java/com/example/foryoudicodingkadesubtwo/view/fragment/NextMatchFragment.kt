@@ -6,76 +6,77 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.NextMatch.NextMatchPresenter
+import com.example.foryoudicodingkadesubtwo.NextMatch.NextView
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.adapter.NextMatchAdapter
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
 import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchNextActivity
 import com.example.foryoudicodingkadesubtwo.view.model.NextMatchInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.NextMatchViewModel
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_nextmatch.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
-class NextMatchFragment : Fragment() {
 
-    private lateinit var mainViewModel: NextMatchViewModel
+class NextMatchFragment : Fragment(), NextView {
+
     private lateinit var mAdapter: NextMatchAdapter
+    private var teams: MutableList<NextMatchInit> = mutableListOf()
+    private lateinit var presenter: NextMatchPresenter
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter =
+            NextMatchPresenter(this, request, gson)
+
+        presenter.getNextMatchList(context?.let { setIDleague.getToken(it) })
+
+
+
+        mAdapter = NextMatchAdapter(teams) {
+            toast("Hello, ${it.idEvent}, Opened")
+            startActivity<DetailMatchNextActivity>(
+                DetailMatchNextActivity.SET_PARCELABLE to it)
+
+        }
+        mAdapter.notifyDataSetChanged()
+
+
+
+        recyclerViewMain.layoutManager = LinearLayoutManager(context)
+        recyclerViewMain.adapter = mAdapter
+//
+    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_nextmatch, container, false)
-
-
-        val recyclerViewMain = view.findViewById(R.id.recyclerViewMain) as RecyclerView
-        mAdapter = NextMatchAdapter()
-        mAdapter.notifyDataSetChanged()
-        mAdapter.setOnItemClickCallback(object : NextMatchAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: NextMatchInit) {
-                toast("Hello, ${data.idEvent}, Opened")
-                startActivity<DetailMatchNextActivity>(
-                    DetailMatchNextActivity.SET_PARCELABLE to data)
-
-            }
-        })
-
-        recyclerViewMain.layoutManager = LinearLayoutManager(context)
-        recyclerViewMain.adapter = mAdapter
-
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            NextMatchViewModel::class.java)
-
-        mainViewModel.setListNextMatch(context?.let {
-            setIDleague.getToken(
-                it
-            )
-        })
-
-
-
-        mainViewModel.getListNextMatch().observe(this, Observer {
-            it?.also {
-                if (it == null) {
-                    toast("Detail init null")
-                }
-
-                if (it.size <= 0) {
-                    toast("Hello, ${it.size}, Opened")
-                }
-                if (it != null) {
-
-                    Log.d("jsonNext", it.toString())
-
-                    mAdapter.setData(it)
-
-
-                }
-            }
-        })
         return view
+    }
+
+    override fun showLoading() {
+//        progressBar.visible()
+    }
+
+    override fun hideLoading() {
+//        progressBar.invisible()
+    }
+
+    override fun showTeamList(data: List<NextMatchInit>) {
+
+        teams.clear()
+
+        Log.d("jsonres", data.toString())
+
+        teams.addAll(data)
+        mAdapter.notifyDataSetChanged()
     }
 }

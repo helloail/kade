@@ -2,23 +2,24 @@ package com.example.foryoudicodingkadesubtwo.view.activity
 
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
+import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayPresenter
+import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayView
+import com.example.foryoudicodingkadesubtwo.ImageHome.ImageHomePresenter
+import com.example.foryoudicodingkadesubtwo.ImageHome.ImageHomeView
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.R.id.add_to_favorite
 import com.example.foryoudicodingkadesubtwo.R.menu.detail_menu
-import com.example.foryoudicodingkadesubtwo.database
+import com.example.foryoudicodingkadesubtwo.helper.database
 import com.example.foryoudicodingkadesubtwo.view.model.ImageAwayInit
 import com.example.foryoudicodingkadesubtwo.view.model.ImageHomeInit
 import com.example.foryoudicodingkadesubtwo.view.model.NextMatchInit
-import com.example.foryoudicodingkadesubtwo.FavoriteEntity
-import com.example.foryoudicodingkadesubtwo.viewmodel.ImageAwayViewModel
-import com.example.foryoudicodingkadesubtwo.viewmodel.ImageHomeViewModel
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.db.classParser
@@ -27,16 +28,20 @@ import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
-class DetailMatchNextActivity : AppCompatActivity() {
+class DetailMatchNextActivity : AppCompatActivity(), ImageHomeView, ImageAwayView {
 
-    private lateinit var hViewModel: ImageHomeViewModel
 
-    private lateinit var aViewModel: ImageAwayViewModel
+    private lateinit var presenter: ImageHomePresenter
+    private lateinit var presenteraway: ImageAwayPresenter
+
     private lateinit var data: NextMatchInit
     private lateinit var id: String
 
     private var isFavorite: Boolean = false
     private var menuItem: Menu? = null
+
+    val request = ApiRepository()
+    val gson = Gson()
 
     companion object {
         const val SET_PARCELABLE = "extra_person"
@@ -74,57 +79,45 @@ class DetailMatchNextActivity : AppCompatActivity() {
 
         favoriteState()
 
-        hViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            ImageHomeViewModel::class.java
-        )
-        hViewModel.setListmovie(data.idHomeTeam)
-//        setListmovie(data.idleague)
+        presentHome()
+        presentAway()
 
-        hViewModel.getListMovie().observe(this, Observer {
-            it?.also {
-                if (it == null) {
-                    toast("Detail init null")
-                }
+    }
 
-                if (it.size <= 0) {
-                    toast("Hello, ${it.size}, Opened")
-                }
-                if (it != null) {
+    fun presentHome() {
 
-                    Log.d("jsondetail", it.toString())
-                    ImageHome(it)
+        presenter = ImageHomePresenter(this, request, gson)
+
+        presenter.getImageHome(data.idHomeTeam)
+    }
 
 
-                }
-            }
-        })
+    fun presentAway() {
+        presenteraway = ImageAwayPresenter(this, request, gson)
 
+        presenteraway.getAwayImage(data.idAwayTeam)
 
-        aViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            ImageAwayViewModel::class.java
-        )
-        aViewModel.setListmovie(data.idAwayTeam)
-//        setListmovie(data.idleague)
+    }
 
-        aViewModel.getListMovie().observe(this, Observer {
-            it?.also {
-                if (it == null) {
-                    toast("Detail init null")
-                }
+    override fun showLoading() {
+//        progressBar.visible()
+    }
 
-                if (it.size <= 0) {
-                    toast("Hello, ${it.size}, Opened")
-                }
-                if (it != null) {
+    override fun hideLoading() {
+//        progressBar.invisible()
+    }
 
-                    Log.d("jsondetail", it.toString())
-                    ImageAway(it)
+    override fun showTeamList(data: List<ImageHomeInit>) {
+        val team = data?.get(0)
 
+        team?.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
 
-                }
-            }
-        })
+    }
 
+    override fun showImageAway(data: List<ImageAwayInit>) {
+        val team = data?.get(0)
+
+        team?.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
 
     }
 
@@ -228,10 +221,11 @@ class DetailMatchNextActivity : AppCompatActivity() {
         }
     }
 
-    private fun favoriteState(){
+    private fun favoriteState() {
         database.use {
             val result = select(FavoriteEntity.FAVORITE_MATCH)
-                .whereArgs("(MATCH_ID = {id})",
+                .whereArgs(
+                    "(MATCH_ID = {id})",
                     "id" to id
                 )
             val favorite = result.parseList(classParser<FavoriteEntity>())

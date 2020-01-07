@@ -10,69 +10,36 @@ import kotlinx.android.synthetic.main.item_listmatch.view.*
 import kotlinx.android.synthetic.main.item_listmatch.view.title_time
 
 
-class NextMatchAdapter : RecyclerView.Adapter<NextMatchAdapter.WeatherViewHolder>() {
-    private val mData = ArrayList<NextMatchInit>()
+class NextMatchAdapter( private val favorite: List<NextMatchInit>,
+private val listener: (NextMatchInit) -> Unit
 
-    private var onItemClickCallback: OnItemClickCallback? = null
+) : RecyclerView.Adapter<NextMatchAdapter.FavoriteViewHolder>() {
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        val mView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_listmatch, parent, false)
+        return FavoriteViewHolder(mView)
     }
 
-    /**
-     * Gunakan method ini jika semua datanya akan diganti
-     *
-     * @param items kumpulan data baru yang akan mengganti semua data yang sudah ada
-     */
-    fun setData(items: ArrayList<NextMatchInit>) {
-        mData.clear()
-        mData.addAll(items)
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bindItem(favorite[position], listener)
     }
 
-    /**
-     * Gunakan method ini jika ada 1 data yang ditambahkan
-     *
-     * @param item data baru yang akan ditambahkan
-     */
-    fun addItem(item: NextMatchInit) {
-        mData.add(item)
-        notifyDataSetChanged()
-    }
+    override fun getItemCount(): Int = favorite.size
 
-    fun clearData() {
-        mData.clear()
-    }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): WeatherViewHolder {
-        val mView = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_listmatch, viewGroup, false)
-        return WeatherViewHolder(mView)
-    }
+    class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    override fun onBindViewHolder(weatherViewHolder: WeatherViewHolder, position: Int) {
-        weatherViewHolder.bind(mData[position])
-    }
 
-    override fun getItemCount(): Int = mData.size
+        fun bindItem(match: NextMatchInit, listener: (NextMatchInit) -> Unit) {
 
-    inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(match: NextMatchInit) {
-            with(itemView){
+            itemView.listTeamAwway.text = match.strHomeTeam
+            itemView.listTeamHome.text = match.strAwayTeam
+            itemView.away_score.text = " "
+            itemView.home_score.text = " "
+            itemView.title_time.text = match.dateEvent+" "+match.strTimeLocal
+            itemView.setOnClickListener { listener(match) }
 
-                itemView.listTeamAwway.text = match.strHomeTeam
-                itemView.listTeamHome.text = match.strAwayTeam
-                itemView.away_score.text = " "
-                itemView.home_score.text = " "
-                itemView.title_time.text = match.dateEvent+" "+match.strTimeLocal
-
-                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(match) }
-            }
         }
     }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(data: NextMatchInit)
-    }
 }
-
-

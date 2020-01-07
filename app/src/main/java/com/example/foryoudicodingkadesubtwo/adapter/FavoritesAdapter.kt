@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foryoudicodingkadesubtwo.FavoriteEntity
+import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
 import com.example.foryoudicodingkadesubtwo.R
 import kotlinx.android.synthetic.main.item_listmatch.view.*
 
@@ -38,6 +38,7 @@ class FavoritesAdapter(
             itemView.home_score.text = favorite.homeScore
             itemView.title_time.text = favorite.matchDate + " " + favorite.matchTime
             itemView.setOnClickListener { listener(favorite) }
+
         }
     }
 }

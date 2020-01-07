@@ -1,71 +1,64 @@
 package com.example.foryoudicodingkadesubtwo.Test
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.example.foryoudicodingkadesubtwo.mock
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchPresenter
+import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchResponse
+import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchView
+import com.example.foryoudicodingkadesubtwo.TestContextProvider
 import com.example.foryoudicodingkadesubtwo.view.model.PastMatchInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.PastMatchViewModel
-import org.junit.Assert
+import com.google.gson.Gson
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
 class PastMatchTest {
+    @Mock
+    private lateinit var view: PastMatchView
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
+    @Mock
+    private lateinit var gson: Gson
 
-    private lateinit var pastMatchViewModel: PastMatchViewModel
+    @Mock
+    private lateinit var apiRepository: ApiRepository
 
-    private val observer: Observer<List<PastMatchInit>> = mock()
+    @Mock
+    private lateinit var apiResponse: Deferred<String>
 
-    val id = "4337"
+    private lateinit var presenter: PastMatchPresenter
 
     @Before
-    fun before() {
-        pastMatchViewModel = PastMatchViewModel()
-
-        pastMatchViewModel.getListPastMatch().observeForever(observer)
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        presenter = PastMatchPresenter(view, apiRepository, gson, TestContextProvider())
     }
 
     @Test
-    fun getLeagueDetailSuccsess() {
+    fun testGetTeamList() {
+        val teams: MutableList<PastMatchInit> = mutableListOf()
+        val response = PastMatchResponse(teams)
+        val league = "4332"
 
-        val expectedUser = PastMatchInit("Dutch Eredivisie",
-            "Male", "Holland",
-            "https://www.thesportsdb.com/images/media/league/badge/ywoi5k1534590331.png",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "")
+        runBlocking {
+            Mockito.`when`(apiRepository.doRequestAsync(ArgumentMatchers.anyString()))
+                .thenReturn(apiResponse)
+            Mockito.`when`(apiResponse.await()).thenReturn("")
+            Mockito.`when`(
+                gson.fromJson(
+                    "",
+                    PastMatchResponse::class.java
+                )
+            ).thenReturn(response)
 
-        pastMatchViewModel.setListPastMatch(id)
-
-        val captor = ArgumentCaptor.forClass(PastMatchInit::class.java)
-
-        captor.run {
-            Mockito.verify(observer, Mockito.times(1)).onChanged(listOf(capture()))
-            Assert.assertEquals(expectedUser, value)
+            presenter.getPastMatchList(league)
+            Mockito.verify(view).showLoading()
+            Mockito.verify(view).showTeamList(teams)
+            Mockito.verify(view).hideLoading()
         }
     }
+
 }

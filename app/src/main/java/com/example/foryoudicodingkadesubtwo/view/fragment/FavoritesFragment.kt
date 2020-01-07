@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.foryoudicodingkadesubtwo.FavoriteEntity
+import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.adapter.FavoritesAdapter
-import com.example.foryoudicodingkadesubtwo.database
+import com.example.foryoudicodingkadesubtwo.helper.database
 import com.example.foryoudicodingkadesubtwo.view.activity.DetailFavoritesActivity
 import kotlinx.android.synthetic.main.fragmentfavorites.*
 import org.jetbrains.anko.db.classParser

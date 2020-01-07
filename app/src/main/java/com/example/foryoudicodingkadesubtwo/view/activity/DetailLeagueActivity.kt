@@ -1,30 +1,29 @@
 package com.example.foryoudicodingkadesubtwo.view.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.example.foryoudicodingkadesubtwo.R
-import com.example.foryoudicodingkadesubtwo.adapter.AdapterTabLayout
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.DetailLeague.DetailLeaguePresenter
+import com.example.foryoudicodingkadesubtwo.DetailLeague.DetailLeagueView
 import com.example.foryoudicodingkadesubtwo.view.fragment.NextMatchFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.PastMatchFragment
+import com.example.foryoudicodingkadesubtwo.R
+import com.example.foryoudicodingkadesubtwo.adapter.AdapterTabLayout
 import com.example.foryoudicodingkadesubtwo.view.model.DetailLeagueInit
 import com.example.foryoudicodingkadesubtwo.view.model.LeagueListInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.DetailLeagueViewModel
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detailleague.*
-import org.jetbrains.anko.toast
 
-class DetailLeagueActivity : AppCompatActivity() {
+class DetailLeagueActivity : AppCompatActivity(),
+    DetailLeagueView {
 
 
-    private lateinit var mainViewModel: DetailLeagueViewModel
     private lateinit var data: LeagueListInit
-
+    private lateinit var presenter: DetailLeaguePresenter
 
     companion object {
         const val SET_PARCELABLE = "extra_person"
@@ -39,37 +38,24 @@ class DetailLeagueActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detailleague)
         initComponent()
         initToolbar()
+        observe()
 
+    }
 
-
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            DetailLeagueViewModel::class.java
+    fun observe() {
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = DetailLeaguePresenter(
+            this,
+            request,
+            gson
         )
-        mainViewModel.setListmovie(data.idleague)
-//        setListmovie(data.idleague)
 
-        mainViewModel.getListMovie().observe(this, Observer {
-            it?.also {
-                if (it == null) {
-                    toast("Detail init null")
-                }
-
-                if (it.size <= 0) {
-                    toast("Hello, ${it.size}, Opened")
-                }
-                if (it != null) {
-
-                    Log.d("jsondetail", it.toString())
-
-                    showGoalDetailsSection(it)
-
-
-                }
-            }
-        })
+        presenter.getDetailLeague(data.idleague)
 
 
     }
+
 
     fun initToolbar() {
         setSupportActionBar(toolbar)
@@ -93,13 +79,20 @@ class DetailLeagueActivity : AppCompatActivity() {
             Toast.makeText(this, "Item One Clicked", Toast.LENGTH_LONG).show()
             return true
         }
-
-
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showGoalDetailsSection(League: List<DetailLeagueInit>) {
-        val team = League?.get(0)
+
+    override fun showLoading() {
+//        progressBar.visible()
+    }
+
+    override fun hideLoading() {
+//        progressBar.invisible()
+    }
+
+    override fun showTeamList(data: List<DetailLeagueInit>) {
+        val team = data?.get(0)
         title_liga.text = team?.strLeague
         title_gender.text = team?.strGender
         title_negara.text = team?.strCountry

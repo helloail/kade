@@ -2,14 +2,11 @@ package com.example.foryoudicodingkadesubtwo.helper
 
 import android.content.Context
 import android.content.SharedPreferences
-
-
+import androidx.core.content.edit
 
 
 class setIDleague {
     companion object {
-
-
 
         private val PREF_NAME = "prefs"
 
@@ -26,11 +23,13 @@ class setIDleague {
         }
 
         fun setToken(context: Context, input: String) {
-            val editor = getPrefs(
-                context
-            ).edit()
-            editor.putString("Token", input)
-            editor.commit()
+//            val editor = getPrefs(context).edit()
+//            editor.putString("Token", input)
+//            editor.commit()
+
+            getPrefs(context).edit {
+                putString("Token", input)
+            }
         }
 
         fun clearToken(context: Context) {

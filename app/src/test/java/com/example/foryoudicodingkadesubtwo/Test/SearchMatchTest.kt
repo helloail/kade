@@ -1,72 +1,63 @@
 package com.example.foryoudicodingkadesubtwo.Test
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.example.foryoudicodingkadesubtwo.mock
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.Search.SearchMatchPresenter
+import com.example.foryoudicodingkadesubtwo.Search.SearchMatchResponse
+import com.example.foryoudicodingkadesubtwo.Search.SearchMatchVIew
+import com.example.foryoudicodingkadesubtwo.TestContextProvider
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
-import com.example.foryoudicodingkadesubtwo.viewmodel.SearchViewModel
-import org.junit.Assert
+import com.google.gson.Gson
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
 class SearchMatchTest {
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
+    @Mock
+    private lateinit var view: SearchMatchVIew
 
-    private lateinit var searchViewModel: SearchViewModel
+    @Mock
+    private lateinit var gson: Gson
 
-    private val observer: Observer<List<SearchActivityInit>> = mock()
+    @Mock
+    private lateinit var apiRepository: ApiRepository
 
-    val id = "man"
+    @Mock
+    private lateinit var apiResponse: Deferred<String>
+
+    private lateinit var presenter: SearchMatchPresenter
 
     @Before
-    fun before() {
-        searchViewModel = SearchViewModel()
-
-        searchViewModel.getSearchMatch().observeForever(observer)
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        presenter = SearchMatchPresenter(view, apiRepository, gson, TestContextProvider())
     }
 
     @Test
-    fun getLeagueDetailSuccsess() {
+    fun testGetTeamList() {
+        val teams: MutableList<SearchActivityInit> = mutableListOf()
+        val response = SearchMatchResponse(teams)
+        val league = "man"
 
-        val expectedUser = SearchActivityInit(
-            "Dutch Eredivisie",
-            "Male", "Holland",
-            "https://www.thesportsdb.com/images/media/league/badge/ywoi5k1534590331.png",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        )
+        runBlocking {
+            Mockito.`when`(apiRepository.doRequestAsync(ArgumentMatchers.anyString()))
+                .thenReturn(apiResponse)
+            Mockito.`when`(apiResponse.await()).thenReturn("")
+            Mockito.`when`(
+                gson.fromJson(
+                    "",
+                    SearchMatchResponse::class.java
+                )
+            ).thenReturn(response)
 
-        searchViewModel.setSearchaMatch(id)
-
-        val captor = ArgumentCaptor.forClass(SearchActivityInit::class.java)
-
-        captor.run {
-            Mockito.verify(observer, Mockito.times(1)).onChanged(listOf(capture()))
-            Assert.assertEquals(expectedUser, value)
+            presenter.getSearchMatch(league)
+            Mockito.verify(view).showLoading()
+            Mockito.verify(view).showTeamList(teams)
+            Mockito.verify(view).hideLoading()
         }
     }
 

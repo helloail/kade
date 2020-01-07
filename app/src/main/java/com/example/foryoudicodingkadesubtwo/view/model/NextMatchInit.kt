@@ -1,33 +1,82 @@
 package com.example.foryoudicodingkadesubtwo.view.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
 data class NextMatchInit (
-    val strHomeTeam: String?,
-    val strAwayTeam: String?,
-    val intRound: String?,
-    val dateEvent: String?,
-    val strTimeLocal: String?,
-    val idHomeTeam: String?,
-    val idAwayTeam: String?,
-    val idEvent: String,
-    val strHomeGoalDetails: String?,
-    val strHomeRedCards: String?,
-    val strHomeYellowCards: String?,
-    val strHomeLineupGoalkeeper: String?,
-    val strHomeLineupDefense: String?,
-    val strHomeLineupMidfield: String?,
-    val strHomeLineupForward: String?,
-    val strHomeLineupSubstitutes: String?,
-    val strAwayRedCards: String?,
-    val strAwayYellowCards: String?,
-    val strAwayGoalDetails: String?,
-    val strAwayLineupGoalkeeper: String?,
-    val strAwayLineupDefense: String?,
-    val strAwayLineupMidfield: String?,
-    val strAwayLineupForward: String,
-    val strAwayLineupSubstitutes: String?
+
+    @SerializedName("strHomeTeam")
+    var strHomeTeam: String? = null,
+
+    @SerializedName("strAwayTeam")
+    var strAwayTeam: String? = null,
+
+    @SerializedName("intRound")
+    var intRound: String? = null,
+
+    @SerializedName("dateEvent")
+    var dateEvent: String? = null,
+
+    @SerializedName("strTimeLocal")
+    var strTimeLocal: String? = null,
+
+    @SerializedName("idHomeTeam")
+    var idHomeTeam: String? = null,
+
+    @SerializedName("idAwayTeam")
+    var idAwayTeam: String? = null,
+
+    @SerializedName("idEvent")
+    var idEvent: String,
+
+    @SerializedName("strHomeGoalDetails")
+    var strHomeGoalDetails: String? = null,
+
+    @SerializedName("strHomeRedCards")
+    var strHomeRedCards: String? = null,
+
+    @SerializedName("strHomeYellowCards")
+    var strHomeYellowCards: String? = null,
+
+    @SerializedName("strHomeLineupGoalkeeper")
+    var strHomeLineupGoalkeeper: String? = null,
+
+    @SerializedName("strHomeLineupDefense")
+    var strHomeLineupDefense: String? = null,
+
+    @SerializedName("strHomeLineupMidfield")
+    var strHomeLineupMidfield: String? = null,
+
+    @SerializedName("strHomeLineupForward")
+    var strHomeLineupForward: String? = null,
+
+    @SerializedName("strHomeLineupSubstitutes")
+    var strHomeLineupSubstitutes: String? = null,
+
+    @SerializedName("strAwayRedCards")
+    var strAwayRedCards: String? = null,
+
+    @SerializedName("strAwayYellowCards")
+    var strAwayYellowCards: String? = null,
+
+    @SerializedName("strAwayGoalDetails")
+    var strAwayGoalDetails: String? = null,
+
+    @SerializedName("strAwayLineupGoalkeeper")
+    var strAwayLineupGoalkeeper: String? = null,
+
+    @SerializedName("strAwayLineupDefense")
+    var strAwayLineupDefense: String? = null,
+
+    @SerializedName("strAwayLineupMidfield")
+    var strAwayLineupMidfield: String? = null,
+
+    @SerializedName("strAwayLineupForward")
+    var strAwayLineupForward: String? = null,
+
+    @SerializedName("strAwayLineupSubstitutes")
+    var strAwayLineupSubstitutes: String? = null
 ) : Parcelable

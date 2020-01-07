@@ -1,7 +1,8 @@
-package com.example.foryoudicodingkadesubtwo
+package com.example.foryoudicodingkadesubtwo.helper
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
 import org.jetbrains.anko.db.*
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
     companion object {
@@ -10,7 +11,8 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
         @Synchronized
         fun getInstance(ctx: Context): MyDatabaseOpenHelper {
             if (instance == null) {
-                instance = MyDatabaseOpenHelper(ctx.applicationContext)
+                instance =
+                    MyDatabaseOpenHelper(ctx.applicationContext)
             }
             return instance as MyDatabaseOpenHelper
         }
@@ -58,4 +60,6 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
 }
 
 val Context.database: MyDatabaseOpenHelper
-    get() = MyDatabaseOpenHelper.getInstance(applicationContext)
+    get() = MyDatabaseOpenHelper.getInstance(
+        applicationContext
+    )

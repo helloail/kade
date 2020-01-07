@@ -40,10 +40,7 @@ class ListLeagueFragment : Fragment() {
                 toast("Hello, ${data.name}, Opened")
                 data.idleague?.let {
                     context?.let { it1 ->
-                        setIDleague.setToken(
-                            it1,
-                            it
-                        )
+                        setIDleague.setToken(it1, it)
                     }
                 }
 
