@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.R.menu.menu_search
-import com.example.foryoudicodingkadesubtwo.Search.SearchMatchPresenter
-import com.example.foryoudicodingkadesubtwo.Search.SearchMatchVIew
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchPresenter
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchVIew
 import com.example.foryoudicodingkadesubtwo.adapter.SearchActivityAdapter
 import com.example.foryoudicodingkadesubtwo.view.fragment.FavoritesFragment
-import com.example.foryoudicodingkadesubtwo.view.fragment.ListLeagueFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.LeagueListFragment
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
         initToolbar()
         initRecyclerview()
         bn_main.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        val fragment = ListLeagueFragment()
+        val fragment = LeagueListFragment()
         addFragment(fragment)
 
 
@@ -49,7 +49,7 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     val fragment =
-                        ListLeagueFragment()
+                        LeagueListFragment()
                     addFragment(fragment)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fl_container, fragment, fragment.javaClass.getSimpleName())
+            .replace(R.id.fl_container, fragment, fragment.javaClass.simpleName)
             .commit()
     }
 
@@ -138,10 +138,10 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
             action_search,
             object : MenuItemCompat.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                    fl_container.setVisibility(View.VISIBLE)
-                    search_recycler.setVisibility(View.GONE)
+                    fl_container.visibility = View.VISIBLE
+                    search_recycler.visibility = View.GONE
 
-                    bn_main.setVisibility(View.VISIBLE)
+                    bn_main.visibility = View.VISIBLE
 
                     initToolbar()
 
@@ -149,9 +149,9 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
                 }
 
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                    fl_container.setVisibility(View.GONE)
-                    search_recycler.setVisibility(View.VISIBLE)
-                    bn_main.setVisibility(View.GONE)
+                    fl_container.visibility = View.GONE
+                    search_recycler.visibility = View.VISIBLE
+                    bn_main.visibility = View.GONE
                     return true
                 }
             })

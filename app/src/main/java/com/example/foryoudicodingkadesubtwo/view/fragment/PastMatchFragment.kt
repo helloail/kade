@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchPresenter
 import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchView
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.adapter.PastMatchAdapter
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
 import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchPastActivity
 import com.example.foryoudicodingkadesubtwo.view.model.PastMatchInit
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_pastmatch.*
+import kotlinx.android.synthetic.main.fragment_listcontent.*
 import org.jetbrains.anko.support.v4.startActivity
 
 
@@ -29,12 +29,12 @@ class PastMatchFragment : Fragment(), PastMatchView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val request = ApiRepository()
-        val gson = Gson()
-        presenter =
-            PastMatchPresenter(this, request, gson)
+        setPresent()
+        setRecycler()
 
-        presenter.getPastMatchList(context?.let { setIDleague.getToken(it) })
+    }
+
+    fun setRecycler() {
         mAdapter = PastMatchAdapter(teams) {
             startActivity<DetailMatchPastActivity>(DetailMatchPastActivity.SET_PARCELABLE to it)
         }
@@ -43,19 +43,21 @@ class PastMatchFragment : Fragment(), PastMatchView {
         recyclerViewMain.layoutManager = LinearLayoutManager(context)
         recyclerViewMain.adapter = mAdapter
 
+    }
+
+    fun setPresent() {
+
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = PastMatchPresenter(this, request, gson)
+
+        presenter.getPastMatchList(context?.let { setIDleague.getToken(it) })
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_pastmatch, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_listcontent, container, false)
 
-
-
-
-        return view
     }
 
 

@@ -30,7 +30,7 @@ class SearchActivityTest {
     fun testRecyclerViewBehaviour() {
 
 //       click menu search
-        onView(withId(action_search)).perform(click());
+        onView(withId(action_search)).perform(click())
 
 
         //input and search "ar"
@@ -56,7 +56,7 @@ class SearchActivityTest {
         Thread.sleep(2000)
 
 
-        Espresso.pressBack();
+        Espresso.pressBack()
 
         //clear and search "la"
         onView(isAssignableFrom(EditText::class.java)).perform(clearText())
@@ -80,7 +80,7 @@ class SearchActivityTest {
 
         Thread.sleep(2000)
 
-        Espresso.pressBack();
+        Espresso.pressBack()
 
 //        clear data and finnish
         onView(isAssignableFrom(EditText::class.java)).perform(clearText())

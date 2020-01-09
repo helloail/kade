@@ -12,6 +12,7 @@ import com.example.foryoudicodingkadesubtwo.view.fragment.NextMatchFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.PastMatchFragment
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.adapter.AdapterTabLayout
+import com.example.foryoudicodingkadesubtwo.view.fragment.TeamListFragment
 import com.example.foryoudicodingkadesubtwo.view.model.DetailLeagueInit
 import com.example.foryoudicodingkadesubtwo.view.model.LeagueListInit
 import com.google.gson.Gson
@@ -45,14 +46,9 @@ class DetailLeagueActivity : AppCompatActivity(),
     fun observe() {
         val request = ApiRepository()
         val gson = Gson()
-        presenter = DetailLeaguePresenter(
-            this,
-            request,
-            gson
-        )
+        presenter = DetailLeaguePresenter(this, request, gson)
 
         presenter.getDetailLeague(data.idleague)
-
 
     }
 
@@ -74,7 +70,7 @@ class DetailLeagueActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
-        val id = item.getItemId()
+        val id = item.itemId
         if (id == R.id.action_search) {
             Toast.makeText(this, "Item One Clicked", Toast.LENGTH_LONG).show()
             return true
@@ -92,12 +88,12 @@ class DetailLeagueActivity : AppCompatActivity(),
     }
 
     override fun showTeamList(data: List<DetailLeagueInit>) {
-        val team = data?.get(0)
-        title_liga.text = team?.strLeague
-        title_gender.text = team?.strGender
-        title_negara.text = team?.strCountry
+        val team = data.get(0)
+        title_liga.text = team.strLeague
+        title_gender.text = team.strGender
+        title_negara.text = team.strCountry
 
-        team?.strBadge.let { Picasso.get().load(it).into(image_logo) }
+        team.strBadge.let { Picasso.get().load(it).into(image_logo) }
 
     }
 
@@ -111,6 +107,7 @@ class DetailLeagueActivity : AppCompatActivity(),
         val adapter = AdapterTabLayout(supportFragmentManager)
         adapter.addFragment(PastMatchFragment(), "Last Match")
         adapter.addFragment(NextMatchFragment(), "Next Match")
+        adapter.addFragment(TeamListFragment(), "Team")
         viewPager.adapter = adapter
 
     }

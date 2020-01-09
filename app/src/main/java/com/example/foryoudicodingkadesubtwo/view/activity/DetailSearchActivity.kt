@@ -103,16 +103,16 @@ class DetailSearchActivity : AppCompatActivity(), ImageHomeView, ImageAwayView {
     }
 
     override fun showTeamList(data: List<ImageHomeInit>) {
-        val team = data?.get(0)
+        val team = data.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
 
     }
 
     override fun showImageAway(data: List<ImageAwayInit>) {
-        val team = data?.get(0)
+        val team = data.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
 
     }
 

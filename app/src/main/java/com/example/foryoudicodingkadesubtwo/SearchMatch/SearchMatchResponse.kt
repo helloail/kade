@@ -1,6 +1,5 @@
-package com.example.foryoudicodingkadesubtwo.Search
+package com.example.foryoudicodingkadesubtwo.SearchMatch
 
-import com.example.foryoudicodingkadesubtwo.view.model.NextMatchInit
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
 
 data class SearchMatchResponse (

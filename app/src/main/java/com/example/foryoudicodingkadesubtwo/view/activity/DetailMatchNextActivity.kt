@@ -108,30 +108,30 @@ class DetailMatchNextActivity : AppCompatActivity(), ImageHomeView, ImageAwayVie
     }
 
     override fun showTeamList(data: List<ImageHomeInit>) {
-        val team = data?.get(0)
+        val team = data.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
 
     }
 
     override fun showImageAway(data: List<ImageAwayInit>) {
-        val team = data?.get(0)
+        val team = data.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
 
     }
 
     private fun ImageHome(team: List<ImageHomeInit>) {
-        val team = team?.get(0)
+        val team = team.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
 
     }
 
     private fun ImageAway(team: List<ImageAwayInit>) {
-        val team = team?.get(0)
+        val team = team.get(0)
 
-        team?.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
+        team.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
 
     }
 

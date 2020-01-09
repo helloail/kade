@@ -7,25 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.NextMatch.NextMatchPresenter
-import com.example.foryoudicodingkadesubtwo.NextMatch.NextView
 import com.example.foryoudicodingkadesubtwo.R
+import com.example.foryoudicodingkadesubtwo.TeamList.TeamListPresenter
+import com.example.foryoudicodingkadesubtwo.TeamList.TeamVIew
 import com.example.foryoudicodingkadesubtwo.adapter.NextMatchAdapter
+import com.example.foryoudicodingkadesubtwo.adapter.TeamListAdapter
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
-import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchNextActivity
-import com.example.foryoudicodingkadesubtwo.view.model.NextMatchInit
+import com.example.foryoudicodingkadesubtwo.view.model.TeamListInit
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_nextmatch.*
-import org.jetbrains.anko.support.v4.startActivity
+import kotlinx.android.synthetic.main.fragment_listcontent.*
 import org.jetbrains.anko.support.v4.toast
 
+class TeamListFragment : Fragment(), TeamVIew {
 
-class NextMatchFragment : Fragment(), NextView {
-
-    private lateinit var mAdapter: NextMatchAdapter
-    private var teams: MutableList<NextMatchInit> = mutableListOf()
-    private lateinit var presenter: NextMatchPresenter
+    private lateinit var mAdapter: TeamListAdapter
+    private var teams: MutableList<TeamListInit> = mutableListOf()
+    private lateinit var presenter: TeamListPresenter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -35,21 +34,23 @@ class NextMatchFragment : Fragment(), NextView {
 //
     }
 
-    fun setPresent(){
+
+    fun setPresent() {
 
         val request = ApiRepository()
         val gson = Gson()
-        presenter = NextMatchPresenter(this, request, gson)
+        presenter = TeamListPresenter(this, request, gson)
 
-        presenter.getNextMatchList(context?.let { setIDleague.getToken(it) })
+        presenter.getTeamList(context?.let { setIDleague.getToken(it) })
 
     }
 
-    fun setRecycler(){
-        mAdapter = NextMatchAdapter(teams) {
-            toast("Hello, ${it.idEvent}, Opened")
-            startActivity<DetailMatchNextActivity>(
-                DetailMatchNextActivity.SET_PARCELABLE to it)
+    fun setRecycler() {
+        mAdapter = TeamListAdapter(teams) {
+            toast("Hello, ${it.idTeam}, Opened")
+//            startActivity<DetailMatchNextActivity>(
+//                DetailMatchNextActivity.SET_PARCELABLE to it
+//            )
 
         }
         mAdapter.notifyDataSetChanged()
@@ -61,11 +62,14 @@ class NextMatchFragment : Fragment(), NextView {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_listcontent, container, false)
 
     }
+
 
     override fun showLoading() {
 //        progressBar.visible()
@@ -75,7 +79,7 @@ class NextMatchFragment : Fragment(), NextView {
 //        progressBar.invisible()
     }
 
-    override fun showTeamList(data: List<NextMatchInit>) {
+    override fun showTeamList(data: List<TeamListInit>) {
 
         teams.clear()
 
@@ -83,5 +87,6 @@ class NextMatchFragment : Fragment(), NextView {
 
         teams.addAll(data)
         mAdapter.notifyDataSetChanged()
+
     }
 }

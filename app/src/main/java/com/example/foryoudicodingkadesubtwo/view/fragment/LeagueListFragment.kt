@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.content_listleague.view.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
-class ListLeagueFragment : Fragment() {
+class LeagueListFragment : Fragment() {
 
 
     private val items = ArrayList<LeagueListInit>()

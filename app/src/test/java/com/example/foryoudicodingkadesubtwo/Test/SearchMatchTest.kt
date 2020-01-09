@@ -1,9 +1,9 @@
 package com.example.foryoudicodingkadesubtwo.Test
 
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
-import com.example.foryoudicodingkadesubtwo.Search.SearchMatchPresenter
-import com.example.foryoudicodingkadesubtwo.Search.SearchMatchResponse
-import com.example.foryoudicodingkadesubtwo.Search.SearchMatchVIew
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchPresenter
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchTeamResponse
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchTeamVIew
 import com.example.foryoudicodingkadesubtwo.TestContextProvider
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
 import com.google.gson.Gson
@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations
 
 class SearchMatchTest {
     @Mock
-    private lateinit var view: SearchMatchVIew
+    private lateinit var view: SearchTeamVIew
 
     @Mock
     private lateinit var gson: Gson
@@ -40,7 +40,7 @@ class SearchMatchTest {
     @Test
     fun testGetTeamList() {
         val teams: MutableList<SearchActivityInit> = mutableListOf()
-        val response = SearchMatchResponse(teams)
+        val response = SearchTeamResponse(teams)
         val league = "man"
 
         runBlocking {
@@ -50,7 +50,7 @@ class SearchMatchTest {
             Mockito.`when`(
                 gson.fromJson(
                     "",
-                    SearchMatchResponse::class.java
+                    SearchTeamResponse::class.java
                 )
             ).thenReturn(response)
 
