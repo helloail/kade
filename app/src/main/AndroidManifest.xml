@@ -21,8 +21,11 @@
         <activity android:name=".view.activity.DetailLeagueActivity"/>
         <activity android:name=".view.activity.DetailMatchPastActivity"/>
         <activity android:name=".view.activity.DetailMatchNextActivity"/>
-        <activity android:name=".view.activity.DetailFavoritesActivity"/>
+        <activity android:name=".view.activity.DetailMatchFavoritesActivity"/>
+        <activity android:name=".view.activity.DetailTeamFavoritesActivity"/>
         <activity android:name=".view.activity.DetailSearchActivity"/>
+        <activity android:name=".view.activity.DetailTeamActivity"/>
+
 
     </application>
 

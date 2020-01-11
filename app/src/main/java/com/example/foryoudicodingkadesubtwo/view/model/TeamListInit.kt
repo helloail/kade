@@ -7,15 +7,17 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class TeamListInit(
 
-
     @SerializedName("idTeam")
-    var idTeam: String? = null,
+    var idTeam: String ,
 
     @SerializedName("strTeam")
     var strTeam: String? = null,
 
     @SerializedName("strStadium")
     var strStadium: String? = null,
+
+    @SerializedName("strCountry")
+    var strCountry: String? = null,
 
     @SerializedName("intFormedYear")
     var intFormedYear: String? = null,
@@ -25,6 +27,18 @@ data class TeamListInit(
 
     @SerializedName("strTeamBadge")
     var strTeamBadge: String? = null,
+
+    @SerializedName("strLeague")
+    var strLeague: String? = null,
+
+    @SerializedName("strAlternate")
+    var strAlternate: String? = null,
+
+    @SerializedName("strKeywords")
+    var strKeywords: String? = null,
+
+    @SerializedName("strTeamFanart4")
+    var strTeamFanart4: String? = null,
 
     @SerializedName("strDescriptionEN")
     var strDescriptionEN: String? = null

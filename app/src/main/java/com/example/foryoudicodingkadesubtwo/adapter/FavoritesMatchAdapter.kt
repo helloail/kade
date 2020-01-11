@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
+import com.example.foryoudicodingkadesubtwo.view.model.MatchFavoriteEntity
 import com.example.foryoudicodingkadesubtwo.R
 import kotlinx.android.synthetic.main.item_listmatch.view.*
 
 
-class FavoritesAdapter(
-    private val favorite: List<FavoriteEntity>,
-    private val listener: (FavoriteEntity) -> Unit
-) : RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>() {
+class FavoritesMatchAdapter(
+    private val favorite: List<MatchFavoriteEntity>,
+    private val listener: (MatchFavoriteEntity) -> Unit
+) : RecyclerView.Adapter<FavoritesMatchAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val mView =
@@ -30,7 +30,7 @@ class FavoritesAdapter(
     class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
-        fun bindItem(favorite: FavoriteEntity, listener: (FavoriteEntity) -> Unit) {
+        fun bindItem(favorite: MatchFavoriteEntity, listener: (MatchFavoriteEntity) -> Unit) {
 
             itemView.listTeamAwway.text = favorite.homeTeamName
             itemView.listTeamHome.text = favorite.awayTeamName

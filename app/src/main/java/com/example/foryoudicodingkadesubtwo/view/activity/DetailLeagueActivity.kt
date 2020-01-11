@@ -5,13 +5,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.DetailLeague.DetailLeaguePresenter
 import com.example.foryoudicodingkadesubtwo.DetailLeague.DetailLeagueView
-import com.example.foryoudicodingkadesubtwo.view.fragment.NextMatchFragment
-import com.example.foryoudicodingkadesubtwo.view.fragment.PastMatchFragment
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.adapter.AdapterTabLayout
+import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
+import com.example.foryoudicodingkadesubtwo.view.fragment.NextMatchFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.PastMatchFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.TeamListFragment
 import com.example.foryoudicodingkadesubtwo.view.model.DetailLeagueInit
 import com.example.foryoudicodingkadesubtwo.view.model.LeagueListInit
@@ -34,8 +34,6 @@ class DetailLeagueActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = intent.getParcelableExtra(SET_PARCELABLE) as LeagueListInit
-
-
         setContentView(R.layout.activity_detailleague)
         initComponent()
         initToolbar()

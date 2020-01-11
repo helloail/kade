@@ -77,11 +77,18 @@ class NextMatchFragment : Fragment(), NextView {
 
     override fun showTeamList(data: List<NextMatchInit>) {
 
-        teams.clear()
+        if(data.size == null){
+            toast("data kosong")
+        }else{
 
-        Log.d("jsonres", data.toString())
+            teams.clear()
 
-        teams.addAll(data)
-        mAdapter.notifyDataSetChanged()
+            Log.d("jsonres", data.toString())
+
+            teams.addAll(data)
+            mAdapter.notifyDataSetChanged()
+        }
+
+
     }
 }

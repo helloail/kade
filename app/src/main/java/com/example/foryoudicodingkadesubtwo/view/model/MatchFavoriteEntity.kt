@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class FavoriteEntity(
+data class MatchFavoriteEntity(
     val id: Long?,
     val matchId: String,
     val homeTeamId: String?,

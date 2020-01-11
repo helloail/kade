@@ -16,8 +16,10 @@ import com.example.foryoudicodingkadesubtwo.R.menu.menu_search
 import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchPresenter
 import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchVIew
 import com.example.foryoudicodingkadesubtwo.adapter.SearchActivityAdapter
-import com.example.foryoudicodingkadesubtwo.view.fragment.FavoritesFragment
-import com.example.foryoudicodingkadesubtwo.view.fragment.LeagueListFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.FavoriteContentFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.FavoritesMatchFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.FavoritesTeamFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.HomeContentFragment
 import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -37,7 +39,7 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
         initToolbar()
         initRecyclerview()
         bn_main.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        val fragment = LeagueListFragment()
+        val fragment = HomeContentFragment()
         addFragment(fragment)
 
 
@@ -49,12 +51,12 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     val fragment =
-                        LeagueListFragment()
+                        HomeContentFragment()
                     addFragment(fragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_favorites -> {
-                    val fragment = FavoritesFragment()
+                    val fragment = FavoriteContentFragment()
                     addFragment(fragment)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -126,7 +128,6 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-//                sViewModel.setSearchaMatch(query)
                 presenter.getSearchMatch(query)
 
                 return true

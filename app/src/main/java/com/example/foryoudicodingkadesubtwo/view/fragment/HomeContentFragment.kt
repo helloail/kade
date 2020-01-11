@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.content_listleague.view.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
-class LeagueListFragment : Fragment() {
+class HomeContentFragment : Fragment() {
 
 
     private val items = ArrayList<LeagueListInit>()
@@ -23,8 +23,7 @@ class LeagueListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.content_listleague, container, false)
 
         initData()
@@ -34,16 +33,10 @@ class LeagueListFragment : Fragment() {
         val mAdapter = LeagueListAdapter(items)
         view.recyclerView.adapter = mAdapter
 
-        mAdapter.setOnItemClickCallback(object :
-            LeagueListAdapter.OnItemClickCallback {
+        mAdapter.setOnItemClickCallback(object : LeagueListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: LeagueListInit) {
                 toast("Hello, ${data.name}, Opened")
-                data.idleague?.let {
-                    context?.let { it1 ->
-                        setIDleague.setToken(it1, it)
-                    }
-                }
-
+                data.idleague?.let { context?.let { it1 -> setIDleague.setToken(it1, it) } }
                 startActivity<DetailLeagueActivity>(
                     DetailLeagueActivity.SET_PARCELABLE to data
                 )

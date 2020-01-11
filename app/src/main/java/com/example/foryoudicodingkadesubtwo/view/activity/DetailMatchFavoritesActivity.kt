@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
-import com.example.foryoudicodingkadesubtwo.view.model.FavoriteEntity
+import com.example.foryoudicodingkadesubtwo.view.model.MatchFavoriteEntity
 import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayPresenter
 import com.example.foryoudicodingkadesubtwo.ImageAway.ImageAwayView
 import com.example.foryoudicodingkadesubtwo.ImageHome.ImageHomePresenter
@@ -18,18 +18,18 @@ import com.example.foryoudicodingkadesubtwo.view.model.ImageAwayInit
 import com.example.foryoudicodingkadesubtwo.view.model.ImageHomeInit
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detailmatch.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
-class DetailFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayView {
+class DetailMatchFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayView {
 
     private lateinit var presenter: ImageHomePresenter
     private lateinit var presenteraway: ImageAwayPresenter
-    private lateinit var data: FavoriteEntity
+    private lateinit var data: MatchFavoriteEntity
     private var isFavorite: Boolean = false
     private var menuItem: Menu? = null
     private lateinit var id: String
@@ -43,9 +43,9 @@ class DetailFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_detailmatch)
         initToolbar()
-        data = intent.getParcelableExtra(SET_PARCELABLE) as FavoriteEntity
+        data = intent.getParcelableExtra(SET_PARCELABLE) as MatchFavoriteEntity
         id = data.matchId
         home_team.text = data.homeTeamName
         away_team.text = data.awayTeamName
@@ -146,32 +146,32 @@ class DetailFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayVie
         try {
             database.use {
                 insert(
-                    FavoriteEntity.FAVORITE_MATCH,
-                    FavoriteEntity.MATCH_ID to data.matchId,
-                    FavoriteEntity.HOME_TEAM_ID to data.homeTeamId,
-                    FavoriteEntity.AWAY_TEAM_ID to data.awayTeamId,
-                    FavoriteEntity.HOME_TEAM_NAME to data.homeTeamName,
-                    FavoriteEntity.AWAY_TEAM_NAME to data.awayTeamName,
-                    FavoriteEntity.HOME_SCORE to data.homeScore,
-                    FavoriteEntity.AWAY_SCORE to data.awayScore,
-                    FavoriteEntity.MATCH_DATE to data.matchDate,
-                    FavoriteEntity.MATCH_TIME to data.matchTime,
-                    FavoriteEntity.GOAL_HOME to data.Goalhome,
-                    FavoriteEntity.GOAL_AWAY to data.Goalaway,
-                    FavoriteEntity.GK_HOME to data.GkHome,
-                    FavoriteEntity.GK_AWAY to data.GkAway,
-                    FavoriteEntity.DEFF_HOME to data.DeffHome,
-                    FavoriteEntity.DEFF_AWAY to data.DeffAway,
-                    FavoriteEntity.FORWARD_HOME to data.forwardHome,
-                    FavoriteEntity.FORWARD_AWAY to data.forwardAway,
-                    FavoriteEntity.MID_HOME to data.MidHome,
-                    FavoriteEntity.MID_AWAY to data.MidAway,
-                    FavoriteEntity.SUB_HOME to data.subHome,
-                    FavoriteEntity.SUB_AWAY to data.subAway,
-                    FavoriteEntity.RED_HOME to data.redHome,
-                    FavoriteEntity.RED_AWAY to data.redAway,
-                    FavoriteEntity.YELLOW_HOME to data.yellowHome,
-                    FavoriteEntity.YELLOW_AWAY to data.yellowAway
+                    MatchFavoriteEntity.FAVORITE_MATCH,
+                    MatchFavoriteEntity.MATCH_ID to data.matchId,
+                    MatchFavoriteEntity.HOME_TEAM_ID to data.homeTeamId,
+                    MatchFavoriteEntity.AWAY_TEAM_ID to data.awayTeamId,
+                    MatchFavoriteEntity.HOME_TEAM_NAME to data.homeTeamName,
+                    MatchFavoriteEntity.AWAY_TEAM_NAME to data.awayTeamName,
+                    MatchFavoriteEntity.HOME_SCORE to data.homeScore,
+                    MatchFavoriteEntity.AWAY_SCORE to data.awayScore,
+                    MatchFavoriteEntity.MATCH_DATE to data.matchDate,
+                    MatchFavoriteEntity.MATCH_TIME to data.matchTime,
+                    MatchFavoriteEntity.GOAL_HOME to data.Goalhome,
+                    MatchFavoriteEntity.GOAL_AWAY to data.Goalaway,
+                    MatchFavoriteEntity.GK_HOME to data.GkHome,
+                    MatchFavoriteEntity.GK_AWAY to data.GkAway,
+                    MatchFavoriteEntity.DEFF_HOME to data.DeffHome,
+                    MatchFavoriteEntity.DEFF_AWAY to data.DeffAway,
+                    MatchFavoriteEntity.FORWARD_HOME to data.forwardHome,
+                    MatchFavoriteEntity.FORWARD_AWAY to data.forwardAway,
+                    MatchFavoriteEntity.MID_HOME to data.MidHome,
+                    MatchFavoriteEntity.MID_AWAY to data.MidAway,
+                    MatchFavoriteEntity.SUB_HOME to data.subHome,
+                    MatchFavoriteEntity.SUB_AWAY to data.subAway,
+                    MatchFavoriteEntity.RED_HOME to data.redHome,
+                    MatchFavoriteEntity.RED_AWAY to data.redAway,
+                    MatchFavoriteEntity.YELLOW_HOME to data.yellowHome,
+                    MatchFavoriteEntity.YELLOW_AWAY to data.yellowAway
 
 
                 )
@@ -187,26 +187,14 @@ class DetailFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayVie
 
     }
 
-    private fun ImageHome(team: List<ImageHomeInit>) {
-        val team = team.get(0)
 
-        team.strTeamBadge.let { Picasso.get().load(it).into(image_home) }
-
-    }
-
-    private fun ImageAway(team: List<ImageAwayInit>) {
-        val team = team.get(0)
-
-        team.strTeamBadge.let { Picasso.get().load(it).into(image_away) }
-
-    }
 
     private fun removeFromFavorite() {
         try {
             database.use {
                 delete(
-                    FavoriteEntity.FAVORITE_MATCH,
-                    "(${FavoriteEntity.MATCH_ID} = {matchId})",
+                    MatchFavoriteEntity.FAVORITE_MATCH,
+                    "(${MatchFavoriteEntity.MATCH_ID} = {matchId})",
                     "matchId" to id
                 )
             }
@@ -217,12 +205,12 @@ class DetailFavoritesActivity : AppCompatActivity(), ImageHomeView, ImageAwayVie
 
     private fun favoriteState() {
         database.use {
-            val result = select(FavoriteEntity.FAVORITE_MATCH)
+            val result = select(MatchFavoriteEntity.FAVORITE_MATCH)
                 .whereArgs(
                     "(MATCH_ID = {id})",
                     "id" to id
                 )
-            val favorite = result.parseList(classParser<FavoriteEntity>())
+            val favorite = result.parseList(classParser<MatchFavoriteEntity>())
             if (favorite.isNotEmpty()) {
                 isFavorite = true
                 toast("data, ${id}, sudah ada")

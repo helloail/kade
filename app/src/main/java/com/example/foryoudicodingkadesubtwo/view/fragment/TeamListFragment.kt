@@ -7,17 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryoudicodingkadesubtwo.NextMatch.NextMatchPresenter
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.TeamList.TeamListPresenter
 import com.example.foryoudicodingkadesubtwo.TeamList.TeamVIew
-import com.example.foryoudicodingkadesubtwo.adapter.NextMatchAdapter
+import com.example.foryoudicodingkadesubtwo.adapter.PastMatchAdapter
 import com.example.foryoudicodingkadesubtwo.adapter.TeamListAdapter
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
+import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchPastActivity
+import com.example.foryoudicodingkadesubtwo.view.activity.DetailTeamActivity
 import com.example.foryoudicodingkadesubtwo.view.model.TeamListInit
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_listcontent.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class TeamListFragment : Fragment(), TeamVIew {
@@ -46,12 +48,9 @@ class TeamListFragment : Fragment(), TeamVIew {
     }
 
     fun setRecycler() {
-        mAdapter = TeamListAdapter(teams) {
-            toast("Hello, ${it.idTeam}, Opened")
-//            startActivity<DetailMatchNextActivity>(
-//                DetailMatchNextActivity.SET_PARCELABLE to it
-//            )
 
+        mAdapter = TeamListAdapter(teams) {
+            startActivity<DetailTeamActivity>(DetailTeamActivity.SET_PARCELABLE to it)
         }
         mAdapter.notifyDataSetChanged()
 
@@ -81,12 +80,17 @@ class TeamListFragment : Fragment(), TeamVIew {
 
     override fun showTeamList(data: List<TeamListInit>) {
 
-        teams.clear()
+        if(data.size == null){
+            toast("data kosong")
+        }else {
 
-        Log.d("jsonres", data.toString())
+            teams.clear()
 
-        teams.addAll(data)
-        mAdapter.notifyDataSetChanged()
+            Log.d("jsonres", data.toString())
+
+            teams.addAll(data)
+            mAdapter.notifyDataSetChanged()
+        }
 
     }
 }

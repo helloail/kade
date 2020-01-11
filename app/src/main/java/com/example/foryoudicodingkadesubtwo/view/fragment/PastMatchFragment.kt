@@ -18,6 +18,7 @@ import com.example.foryoudicodingkadesubtwo.view.model.PastMatchInit
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_listcontent.*
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 
 
 class PastMatchFragment : Fragment(), PastMatchView {
@@ -71,12 +72,16 @@ class PastMatchFragment : Fragment(), PastMatchView {
 
     override fun showTeamList(data: List<PastMatchInit>) {
 
-        teams.clear()
+        if(data.size == null){
+            toast("data kosong")
+        }else {
+            teams.clear()
 
-        Log.d("jsonres", data.toString())
+            Log.d("jsonres", data.toString())
 
-        teams.addAll(data)
-        mAdapter.notifyDataSetChanged()
+            teams.addAll(data)
+            mAdapter.notifyDataSetChanged()
+        }
     }
 
 
