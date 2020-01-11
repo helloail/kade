@@ -2,6 +2,7 @@ package com.example.foryoudicodingkadesubtwo.Test
 
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchPresenter
+import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchMatchVIew
 import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchTeamResponse
 import com.example.foryoudicodingkadesubtwo.SearchMatch.SearchTeamVIew
 import com.example.foryoudicodingkadesubtwo.TestContextProvider
@@ -18,7 +19,7 @@ import org.mockito.MockitoAnnotations
 
 class SearchMatchTest {
     @Mock
-    private lateinit var view: SearchTeamVIew
+    private lateinit var view: SearchMatchVIew
 
     @Mock
     private lateinit var gson: Gson

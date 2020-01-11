@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryoudicodingkadesubtwo.R
 import com.example.foryoudicodingkadesubtwo.TeamList.TeamListPresenter
 import com.example.foryoudicodingkadesubtwo.TeamList.TeamVIew
-import com.example.foryoudicodingkadesubtwo.adapter.PastMatchAdapter
 import com.example.foryoudicodingkadesubtwo.adapter.TeamListAdapter
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
-import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchPastActivity
 import com.example.foryoudicodingkadesubtwo.view.activity.DetailTeamActivity
 import com.example.foryoudicodingkadesubtwo.view.model.TeamListInit
 import com.google.gson.Gson
@@ -80,9 +78,9 @@ class TeamListFragment : Fragment(), TeamVIew {
 
     override fun showTeamList(data: List<TeamListInit>) {
 
-        if(data.size == null){
+        if (data.size == null) {
             toast("data kosong")
-        }else {
+        } else {
 
             teams.clear()
 

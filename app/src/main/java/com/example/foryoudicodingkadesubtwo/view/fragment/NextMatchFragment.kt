@@ -48,8 +48,7 @@ class NextMatchFragment : Fragment(), NextView {
     fun setRecycler(){
         mAdapter = NextMatchAdapter(teams) {
             toast("Hello, ${it.idEvent}, Opened")
-            startActivity<DetailMatchNextActivity>(
-                DetailMatchNextActivity.SET_PARCELABLE to it)
+            startActivity<DetailMatchNextActivity>(DetailMatchNextActivity.SET_PARCELABLE to it)
 
         }
         mAdapter.notifyDataSetChanged()

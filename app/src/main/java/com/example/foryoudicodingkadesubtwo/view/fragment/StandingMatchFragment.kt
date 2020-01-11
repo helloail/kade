@@ -7,24 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchPresenter
+import com.example.foryoudicodingkadesubtwo.NextMatch.NextMatchPresenter
 import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchView
+import com.example.foryoudicodingkadesubtwo.PastMatch.StandingMatchPresenter
+import com.example.foryoudicodingkadesubtwo.PastMatch.StandingMatchView
 import com.example.foryoudicodingkadesubtwo.R
-import com.example.foryoudicodingkadesubtwo.adapter.PastMatchAdapter
+import com.example.foryoudicodingkadesubtwo.adapter.NextMatchAdapter
+import com.example.foryoudicodingkadesubtwo.adapter.StandMatchAdapter
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.setIDleague
-import com.example.foryoudicodingkadesubtwo.view.activity.DetailMatchPastActivity
+import com.example.foryoudicodingkadesubtwo.view.model.NextMatchInit
 import com.example.foryoudicodingkadesubtwo.view.model.PastMatchInit
+import com.example.foryoudicodingkadesubtwo.view.model.StandingInit
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_listcontent.*
-import org.jetbrains.anko.support.v4.startActivity
+import kotlinx.android.synthetic.main.layoutitem_standing.*
 import org.jetbrains.anko.support.v4.toast
 
+class StandingMatchFragment: Fragment(), StandingMatchView {
 
-class PastMatchFragment : Fragment(), PastMatchView {
-    private lateinit var mAdapter: PastMatchAdapter
-    private var teams: MutableList<PastMatchInit> = mutableListOf()
-    private lateinit var presenter: PastMatchPresenter
+    private lateinit var mAdapter: StandMatchAdapter
+    private var teams: MutableList<StandingInit> = mutableListOf()
+    private lateinit var presenter: StandingMatchPresenter
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -36,8 +39,7 @@ class PastMatchFragment : Fragment(), PastMatchView {
     }
 
     fun setRecycler() {
-        mAdapter = PastMatchAdapter(teams) {
-            startActivity<DetailMatchPastActivity>(DetailMatchPastActivity.SET_PARCELABLE to it)
+        mAdapter = StandMatchAdapter(teams) {
         }
         mAdapter.notifyDataSetChanged()
 
@@ -50,21 +52,21 @@ class PastMatchFragment : Fragment(), PastMatchView {
 
         val request = ApiRepository()
         val gson = Gson()
-        presenter = PastMatchPresenter(this, request, gson)
+        presenter = StandingMatchPresenter(this, request, gson)
 
         presenter.getPastMatchList(context?.let { setIDleague.getToken(it) })
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_listcontent, container, false)
+        return inflater.inflate(R.layout.layoutitem_standing, container, false)
 
     }
-
 
     override fun showLoading() {
 //        progressBar.visible()
@@ -74,7 +76,7 @@ class PastMatchFragment : Fragment(), PastMatchView {
 //        progressBar.invisible()
     }
 
-    override fun showTeamList(data: List<PastMatchInit>) {
+    override fun showTeamList(data: List<StandingInit>) {
 
         if (data.size == null) {
             toast("data kosong")
@@ -87,6 +89,4 @@ class PastMatchFragment : Fragment(), PastMatchView {
             mAdapter.notifyDataSetChanged()
         }
     }
-
-
 }

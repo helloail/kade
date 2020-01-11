@@ -12,6 +12,7 @@ import com.example.foryoudicodingkadesubtwo.adapter.AdapterTabLayout
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.view.fragment.NextMatchFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.PastMatchFragment
+import com.example.foryoudicodingkadesubtwo.view.fragment.StandingMatchFragment
 import com.example.foryoudicodingkadesubtwo.view.fragment.TeamListFragment
 import com.example.foryoudicodingkadesubtwo.view.model.DetailLeagueInit
 import com.example.foryoudicodingkadesubtwo.view.model.LeagueListInit
@@ -105,6 +106,7 @@ class DetailLeagueActivity : AppCompatActivity(),
         val adapter = AdapterTabLayout(supportFragmentManager)
         adapter.addFragment(PastMatchFragment(), "Last Match")
         adapter.addFragment(NextMatchFragment(), "Next Match")
+        adapter.addFragment(StandingMatchFragment(), "Standing")
         adapter.addFragment(TeamListFragment(), "Team")
         viewPager.adapter = adapter
 

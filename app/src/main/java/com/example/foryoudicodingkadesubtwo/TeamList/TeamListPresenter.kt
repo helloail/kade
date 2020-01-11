@@ -1,7 +1,5 @@
 package com.example.foryoudicodingkadesubtwo.TeamList
 
-import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchResponse
-import com.example.foryoudicodingkadesubtwo.PastMatch.PastMatchView
 import com.example.foryoudicodingkadesubtwo.helper.ApiRepository
 import com.example.foryoudicodingkadesubtwo.helper.CoroutineContextProvider
 import com.example.foryoudicodingkadesubtwo.helper.DBApi
