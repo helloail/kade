@@ -26,8 +26,8 @@ class FavoriteContentFragment : Fragment() {
     }
 
     private fun initComponent() {
-        setupViewPager(viewpager_main)
-        tablayout_main.setupWithViewPager(viewpager_main)
+        setupViewPager(Viewpager_main)
+        tablayout_main.setupWithViewPager(Viewpager_main)
     }
 
     private fun setupViewPager(viewPager: ViewPager) {

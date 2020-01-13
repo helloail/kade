@@ -26,12 +26,9 @@ class SearchActivityAdapter (private val favorite: List<SearchActivityInit>,
 
     override fun getItemCount(): Int = favorite.size
 
-
     class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
         fun bindItem(match: SearchActivityInit, listener: (SearchActivityInit) -> Unit) {
-
 
                 itemView.listTeamAwway.text = match.strHomeTeam
                 itemView.listTeamHome.text = match.strAwayTeam
@@ -39,7 +36,6 @@ class SearchActivityAdapter (private val favorite: List<SearchActivityInit>,
                 itemView.home_score.text = match.intHomeScore
                 itemView.title_time.text = match.dateEvent + " " + match.strTimeLocal
                 itemView.setOnClickListener { listener(match) }
-
 
         }
     }

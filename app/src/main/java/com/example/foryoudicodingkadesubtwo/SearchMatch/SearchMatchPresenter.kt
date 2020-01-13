@@ -24,7 +24,7 @@ class SearchMatchPresenter(
                 SearchMatchResponse::class.java
             )
             val value = data.event.filter { it.strSport=="Soccer" }
-            view.showTeamList(value)
+            view.showMatchList(value)
             view.hideLoading()
         }
     }

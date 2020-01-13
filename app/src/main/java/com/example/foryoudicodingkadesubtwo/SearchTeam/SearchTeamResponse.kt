@@ -1,7 +1,7 @@
 package com.example.foryoudicodingkadesubtwo.SearchMatch
 
-import com.example.foryoudicodingkadesubtwo.view.model.SearchActivityInit
+import com.example.foryoudicodingkadesubtwo.view.model.TeamListInit
 
 data class SearchTeamResponse(
-    val teams: List<SearchActivityInit>
+    val teams: List<TeamListInit>
 )

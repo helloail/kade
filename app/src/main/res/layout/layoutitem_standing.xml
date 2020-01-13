@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#efefef">
 
     <LinearLayout
@@ -88,11 +89,17 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+
+<!--        <include layout="@layout/fragment_listcontent" />-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_standing" />
+            android:scrollbars="none"
+            android:scrollingCache="true"
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </LinearLayout>
 </FrameLayout>

@@ -26,7 +26,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#fbfbfb"
         android:clipToPadding="false"
         android:scrollbars="none"
@@ -42,20 +42,50 @@
                 android:id="@+id/search_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:clipToPadding="false" />
+
             <include layout="@layout/content_home" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_search_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_mlarge"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <belka.us.androidtoggleswitch.widgets.ToggleSwitch
+            android:id="@+id/search_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:activeBgColor="?attr/colorPrimary"
+            app:activeTextColor="@android:color/white"
+            app:inactiveBgColor="@android:color/white"
+            app:inactiveTextColor="@android:color/black"
+            app:textToggleLeft="MATCH"
+            app:textToggleRight="TEAM"
+            app:toggleWidth="104dp" />
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bn_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:background="@color/grey_900"
         app:itemIconTint="@drawable/color_state_primary"
         app:itemTextColor="@drawable/color_state_primary"
         app:menu="@menu/bottomnav" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
