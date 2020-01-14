@@ -16,11 +16,11 @@ class NextMatchPresenter (private val view: NextView,
         view.showLoading()
 
         GlobalScope.launch(contextPool.main){
-            val data = gson.fromJson(apiRepository
+            val datas = gson.fromJson(apiRepository
                 .doRequestAsync(DBApi.getNextMatch(teamId)).await(),
                 NextMatchRespoonse::class.java
             )
-            view.showTeamList(data.events)
+            view.showTeamList(datas.events)
             view.hideLoading()
         }
     }

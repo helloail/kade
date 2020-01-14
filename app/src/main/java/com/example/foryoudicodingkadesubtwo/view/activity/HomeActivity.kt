@@ -91,10 +91,8 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew, SearchTeamVIew {
             )
         }
 
-
         search_recycler.layoutManager = LinearLayoutManager(this)
         search_recycler.adapter = MatchAdapter
-
 
     }
 
@@ -111,10 +109,8 @@ class HomeActivity : AppCompatActivity(), SearchMatchVIew, SearchTeamVIew {
             )
         }
 
-
         search_recycler.layoutManager = LinearLayoutManager(this)
         search_recycler.adapter = TeamAdapter
-
 
     }
 

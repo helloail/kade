@@ -1,6 +1,7 @@
 package com.example.foryoudicodingkadesubtwo.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +47,7 @@ class DetailLeagueActivity : AppCompatActivity(),
         val request = ApiRepository()
         val gson = Gson()
         presenter = DetailLeaguePresenter(this, request, gson)
-
+        Log.d("idleague",data.idleague)
         presenter.getDetailLeague(data.idleague)
 
     }

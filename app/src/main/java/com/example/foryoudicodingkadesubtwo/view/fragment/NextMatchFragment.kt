@@ -74,17 +74,17 @@ class NextMatchFragment : Fragment(), NextView {
 //        progressBar.invisible()
     }
 
-    override fun showTeamList(data: List<NextMatchInit>) {
+    override fun showTeamList(datase: List<NextMatchInit>) {
 
-        if(data.size == null){
+        if(datase.size == null){
             toast("data kosong")
         }else{
 
             teams.clear()
 
-            Log.d("jsonres", data.toString())
+            Log.d("jsonres", datase.toString())
 
-            teams.addAll(data)
+            teams.addAll(datase)
             mAdapter.notifyDataSetChanged()
         }
 

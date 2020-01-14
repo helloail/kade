@@ -30,11 +30,11 @@ class FavoriteContentFragment : Fragment() {
         tablayout_main.setupWithViewPager(Viewpager_main)
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewpager: ViewPager) {
         val adapter = AdapterTabLayout(childFragmentManager)
         adapter.addFragment(FavoritesMatchFragment(), "Match")
         adapter.addFragment(FavoritesTeamFragment(), "Team")
-        viewPager.adapter = adapter
+        viewpager.adapter = adapter
 
     }
 
