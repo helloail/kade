@@ -134,7 +134,7 @@
                     android:layout_marginLeft="@dimen/spacing_xmedium"
                     android:layout_marginTop="@dimen/spacing_xmedium"
                     android:maxLines="1"
-                    android:text="Negara"
+                    android:text="Gender"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey_40"
                     android:textSize="14sp"

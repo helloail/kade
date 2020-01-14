@@ -68,7 +68,7 @@
             android:id="@+id/search_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:activeBgColor="?attr/colorPrimary"
+            app:activeBgColor="@color/grey_60"
             app:activeTextColor="@android:color/white"
             app:inactiveBgColor="@android:color/white"
             app:inactiveTextColor="@android:color/black"
