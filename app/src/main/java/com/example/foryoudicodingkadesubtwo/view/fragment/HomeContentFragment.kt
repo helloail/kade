@@ -29,7 +29,6 @@ class HomeContentFragment : Fragment() {
 
         initData()
 
-
         view.recyclerView.layoutManager = LinearLayoutManager(context)
         val mAdapter = LeagueListAdapter(items)
         view.recyclerView.adapter = mAdapter
@@ -46,8 +45,6 @@ class HomeContentFragment : Fragment() {
         })
 
         return view
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +72,8 @@ class HomeContentFragment : Fragment() {
                 )
             )
         }
+
+        Log.d("tesss",items.toString())
 
         //Recycle the typed array
         logo.recycle()
